@@ -1,0 +1,15 @@
+PODS:
+  - GoAutoSlideView (0.6)
+  - IQKeyboardManager (4.0.4)
+
+DEPENDENCIES:
+  - GoAutoSlideView (~> 0.6)
+  - IQKeyboardManager
+
+SPEC CHECKSUMS:
+  GoAutoSlideView: ab44fb21920bbcd43d6dfae0366aac16951ff32d
+  IQKeyboardManager: 4a6f83b540283c2645aaeba2bd8dc0f09b5c77f8
+
+PODFILE CHECKSUM: cee4632de72fbafe8df8bb2667f446f14a0d418b
+
+COCOAPODS: 1.0.1

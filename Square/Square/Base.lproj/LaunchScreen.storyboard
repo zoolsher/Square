@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11185.3" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11151.4"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="DINCOND-REGULAR.OTF">
+            <string>DINCond-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LunchScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="cfz-EG-8u7">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Hxn-Y7-Kyd"/>
+                                    <constraint firstAttribute="width" secondItem="cfz-EG-8u7" secondAttribute="height" multiplier="1:1" id="peu-rB-F74"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Square" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGr-MB-H4c">
+                                <fontDescription key="fontDescription" name="DINCond-Regular" family="DINCond-Regular" pointSize="23"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.79903155565261841" green="0.19865086674690247" blue="0.2001863420009613" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="cfz-EG-8u7" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="CTp-Lu-i0A"/>
+                            <constraint firstItem="oGr-MB-H4c" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="QkW-oO-YQW"/>
+                            <constraint firstItem="oGr-MB-H4c" firstAttribute="top" secondItem="cfz-EG-8u7" secondAttribute="bottom" constant="8" symbolic="YES" id="Txf-zb-rZL"/>
+                            <constraint firstItem="cfz-EG-8u7" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Wpr-4v-4Vf"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LunchScreenLogo" width="213" height="246"/>
+    </resources>
+</document>
