@@ -47,10 +47,10 @@
                 <constraint firstItem="twd-Nk-u5s" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="QpS-ah-7lH"/>
                 <constraint firstItem="5n7-er-Hab" firstAttribute="centerX" secondItem="twd-Nk-u5s" secondAttribute="centerX" id="TNM-BI-da7"/>
                 <constraint firstItem="OsG-7s-j9Z" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="X9P-Ws-NpS"/>
+                <constraint firstItem="twd-Nk-u5s" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="aCe-td-RUo"/>
                 <constraint firstItem="3xi-Kg-hQK" firstAttribute="width" secondItem="OsG-7s-j9Z" secondAttribute="width" id="fso-0h-pPm"/>
                 <constraint firstItem="3xi-Kg-hQK" firstAttribute="baseline" secondItem="OsG-7s-j9Z" secondAttribute="baseline" id="g3f-Lw-5xS"/>
                 <constraint firstAttribute="trailing" secondItem="3xi-Kg-hQK" secondAttribute="trailing" id="gPm-9w-Y7H"/>
-                <constraint firstItem="twd-Nk-u5s" firstAttribute="top" secondItem="OsG-7s-j9Z" secondAttribute="bottom" id="mdg-z2-Tww"/>
                 <constraint firstItem="3xi-Kg-hQK" firstAttribute="leading" secondItem="OsG-7s-j9Z" secondAttribute="trailing" id="nAi-oe-AUN"/>
                 <constraint firstAttribute="bottom" secondItem="twd-Nk-u5s" secondAttribute="bottom" id="wmU-Vg-PLs"/>
                 <constraint firstItem="twd-Nk-u5s" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="xlg-BF-SbA"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class WorkViewController: UIViewController,UITableViewDataSource {
     
@@ -27,7 +28,7 @@ class WorkViewController: UIViewController,UITableViewDataSource {
             arr.append(data);
         }
         self.title = "Work";
-        self.navigationController?.navigationBar.barStyle = .black;
+        self.navigationController?.navigationBar.barStyle = .Black;
         loadTableViewCell()
         // Do any additional setup after loading the view.
     }
@@ -37,7 +38,7 @@ class WorkViewController: UIViewController,UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         self.fetchWorks { (err) in
             
         }
@@ -49,21 +50,23 @@ class WorkViewController: UIViewController,UITableViewDataSource {
         tableView.rowHeight = 300
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arr.count
     }
     
     let reuse = "_worktableviewcell";
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var tableViewCell = tableView.dequeueReusableCell(withIdentifier: reuse) as? workTableViewCell
+        var tableViewCell = tableView.dequeueReusableCellWithIdentifier(reuse) as? workTableViewCell
         if(tableViewCell==nil){
             print("created one");
-            tableViewCell = Bundle.main.loadNibNamed("workTableViewCell", owner: nil, options: nil)?.first as! workTableViewCell;
+            
+            tableViewCell = NSBundle.mainBundle().loadNibNamed("workTableViewCell", owner: nil, options: nil)?.first as! workTableViewCell;
         }
         
         let data = arr[indexPath.row];
@@ -79,68 +82,61 @@ class WorkViewController: UIViewController,UITableViewDataSource {
         return tableViewCell!;
     }
     
-    func fetchImage(url:URL,res:(UIImage)->Void){
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        URLSession.shared.dataTask(with: request, completionHandler: {(data,_,_) in
-            
-            let image = UIImage.init(data: data!);
-            DispatchQueue.main.sync(execute: {
-                res(image!);
-            })
-        }).resume()
+    func fetchImage(url:NSURL,res:(UIImage)->Void){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
+            Alamofire.request(.GET, url)
+                .responseImage { (response) in
+                    debugPrint(response)
+                    dispatch_async(dispatch_get_main_queue()){
+                        res(response.result.value!)
+                    }
+            }
+        }
     }
+
     
-    func fetchWorks(cb:(Error)->Void){
-        var request = URLRequest(url: URL(string:"/works/getRecomWorks",relativeTo:URL(string:BASE.LOC))!)
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    func fetchWorks(cb:(NSError)->Void){
+        var manager = Manager.sharedInstance
+        manager.session.configuration.HTTPAdditionalHeaders=[
+            "Content-Type":"application/json"
+        ]
         
-        URLSession.shared.dataTask(with: request, completionHandler: {(data,response,err) in
-            if((err) != nil){
-                cb(err!)
-                return
+        Alamofire.request(.GET, BASE.LOC+"/works/getRecomWorks").responseJSON { (response) in
+            if let err = response.result.error {
+                cb(err)
             }else{
-                DispatchQueue.main.sync {
-                    do{
-                        self.arr.removeAll(keepingCapacity: true);
-                        let res = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
-                        
-                        if let tempObj = res as? [String:AnyObject]{
-                            if let result = tempObj["result"] as? String{
-                                if result == "nok" {
-                                    let con = UIAlertController(title: "发生了错误", message: "不知道是什么错误", preferredStyle: UIAlertControllerStyle.alert)
-                                    con.addAction(UIAlertAction(title: "好吧", style: UIAlertActionStyle.default, handler: nil));
-                                    self.present(con, animated: true, completion: nil);
-                                }
+                dispatch_async(dispatch_get_main_queue()){
+                    if let JSON = response.result.value{
+                        let result = JSON["result"]
+                        if result!!.string == "nok"{
+                            let con = UIAlertController(title: "发生了错误", message: "不知道是什么错误", preferredStyle: UIAlertControllerStyle.Alert)
+                            con.addAction(UIAlertAction(title: "好吧", style: UIAlertActionStyle.Default, handler: { action in
+                                self.arr.removeAll()
+                                self.tableView.reloadData()
+                            }));
+                            self.presentViewController(con, animated: true, completion: nil)
+                        }else{
+                            self.arr.removeAll();
+                            for index in 0..<result!!.array.count{
+                                let temp = result!!.array[index]
+                                let tempResult = [
+                                    "title":temp["title"]!.string,
+                                    "postBy":temp["owner"]!["name"]!.string,
+                                    "image":temp["cover"]!.string,
+                                    "time":temp["time"]!.string,
+                                    "view":temp["view"]!.string,
+                                    "heart":temp["likes"]!.string,
+                                    "comment":temp["commentsAmount"]!.string
+                                ]
+                                self.arr.append(tempResult)
                             }
-                        } else {
-                        
-                            if let tempArr = res as? [AnyObject]{
-                                for index in 0..<tempArr.count{
-                                    if let temp = tempArr[index] as? [String:AnyObject] {
-                                        if let owner = temp["owner"] as? [String:String]{
-                                            self.arr.append([
-                                                "title":(temp["title"] as? String)!,
-                                                "postBy":(owner["name"])!,
-                                                "image":(temp["cover"] as? String)!,
-                                                "time":(temp["time"] as? String)!,
-                                                "view":(temp["view"] as? String)! ,
-                                                "heart":(temp["likes"] as? String)!,
-                                                "comment":(temp["commentsAmount"] as? String)!
-                                                ])
-                                            self.tableView.reloadData()
-                                        }
-                                    }
-                                }
-                            }
+                            self.tableView.reloadData()
                         }
-                    } catch is Error {
-                        
                     }
                 }
             }
-        }).resume()
+        }
+        
         
     }
     

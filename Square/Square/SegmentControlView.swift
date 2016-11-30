@@ -23,6 +23,21 @@ class SegmentControlView: UIView {
     
     weak var view:UIView!;
     
+    var name1:String = ""{
+        didSet{
+            self.label1.text = name1
+        }
+    }
+    var name2:String = ""{
+        didSet{
+            self.label2.text = name2
+        }
+    }
+    var name3:String = ""{
+        didSet{
+            self.label3.text = name3
+        }
+    }
     
     private var labelArr = [UILabel]()
     var labelAction : ((Int,Int)->())? = nil
@@ -36,7 +51,8 @@ class SegmentControlView: UIView {
         for i in 0..<labelArr.count {
             let tempGR = UITapGestureRecognizer(target: self, action: #selector(dispatchAction(_:)))
             labelArr[i].addGestureRecognizer(tempGR)
-            labelArr[i].isUserInteractionEnabled = true
+            //labelArr[i].isUserInteractionEnabled = true
+            labelArr[i].userInteractionEnabled = true
             tGR.append(tempGR)
         }
         
@@ -44,9 +60,12 @@ class SegmentControlView: UIView {
     }
     
     func dispatchAction(_ sender:UITapGestureRecognizer){
-        if let index = tGR.index(of: sender){
-            animation(index: index)
-            self.labelAction!(curIndex,index)
+        if let index = tGR.indexOf(sender){
+        //if let index = tGR.index(of: sender){
+            animation(index)
+            if let action = self.labelAction{
+                action(curIndex,index)
+            }
             curIndex = index;
         }
     }
@@ -55,22 +74,37 @@ class SegmentControlView: UIView {
         if(index == curIndex){
             return
         }else{
-            UIView.animate(withDuration: 0.5,
-                           delay: 0.0,
-                           usingSpringWithDamping: 0.5,
-                           initialSpringVelocity: 15.0,
-                           options: UIViewAnimationOptions.curveEaseInOut,
-                           animations: {
-                            let tempLabel = self.labelArr[self.curIndex];
-                            tempLabel.textColor = UIColor.white
-                            let label = self.labelArr[index];
-                            let x = label.frame.origin.x;
-                            let width = label.frame.width;
-                            self.tapView.frame = CGRect(x: x, y: self.tapView.frame.origin.y, width: width, height: self.tapView.frame.height)
-                            label.textColor = UIColor.red
+            UIView.animateWithDuration(0.5,
+                                       delay: 0.0,
+                                       usingSpringWithDamping: 0.5,
+                                       initialSpringVelocity: 15.0,
+                                       options: UIViewAnimationOptions.CurveEaseInOut,
+                                       animations: { 
+                                        let tempLabel = self.labelArr[self.curIndex];
+                                        tempLabel.textColor = UIColor.whiteColor()
+                                        let label = self.labelArr[index];
+                                        let x = label.frame.origin.x;
+                                        let width = label.frame.width;
+                                        self.tapView.frame = CGRect(x: x, y: self.tapView.frame.origin.y, width: width, height: self.tapView.frame.height)
+                                        label.textColor = UIColor.redColor()
                 },
-                           completion: nil
-            )
+                                       completion: nil)
+//            UIView.animate(withDuration: 0.5,
+//                           delay: 0.0,
+//                           usingSpringWithDamping: 0.5,
+//                           initialSpringVelocity: 15.0,
+//                           options: UIViewAnimationOptions.curveEaseInOut,
+//                           animations: {
+//                            let tempLabel = self.labelArr[self.curIndex];
+//                            tempLabel.textColor = UIColor.white
+//                            let label = self.labelArr[index];
+//                            let x = label.frame.origin.x;
+//                            let width = label.frame.width;
+//                            self.tapView.frame = CGRect(x: x, y: self.tapView.frame.origin.y, width: width, height: self.tapView.frame.height)
+//                            label.textColor = UIColor.red
+//                },
+//                           completion: nil
+//            )
         }
     }
     
@@ -78,7 +112,8 @@ class SegmentControlView: UIView {
     
     
     func loadViewFromXib()->UIView{
-        let bundle = Bundle.main.loadNibNamed("SegmentControlView", owner: self, options: nil);
+//        let bundle = Bundle.main.loadNibNamed("SegmentControlView", owner: self, options: nil);
+        let bundle = NSBundle.mainBundle().loadNibNamed("SegmentControlView", owner: self, options: nil);
         let tmpView = bundle?.first as! UIView;
         return tmpView;
     }
@@ -86,7 +121,8 @@ class SegmentControlView: UIView {
     func setupSubviews(){
         
         view = loadViewFromXib()
-        view.autoresizingMask = [UIViewAutoresizing.flexibleHeight,UIViewAutoresizing.flexibleWidth];
+        view.autoresizingMask = [UIViewAutoresizing.FlexibleHeight,UIViewAutoresizing.FlexibleWidth];
+//            [UIViewAutoresizing.flexibleHeight,UIViewAutoresizing.flexibleWidth];
         self.addSubview(view)
         container.frame = self.bounds
         

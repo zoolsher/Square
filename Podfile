@@ -3,5 +3,7 @@ project './Square/Square.xcodeproj'
 use_frameworks!
 target 'Square' do
 	pod 'IQKeyboardManager'
-	pod 'GoAutoSlideView', '~> 0.6'
+	pod 'SwiftyJSON'
+	pod 'Alamofire'
+	pod 'AlamofireImage', '~> 2.0'
 end

@@ -41,7 +41,7 @@ class CollectionOnHomeView: UIView {
     }
     
     func loadViewFromXib()->UIView{
-        let bundle = Bundle.main.loadNibNamed("CollectionOnHomeView", owner: self, options: nil);
+        let bundle = NSBundle.mainBundle().loadNibNamed("CollectionOnHomeView", owner: self, options: nil);
         let tmpView = bundle?.first as! UIView;
         return tmpView;
     }
@@ -53,7 +53,7 @@ class CollectionOnHomeView: UIView {
     func setupSubviews(){
         
         view = loadViewFromXib()
-        view.autoresizingMask = [UIViewAutoresizing.flexibleHeight,UIViewAutoresizing.flexibleWidth];
+        view.autoresizingMask = [UIViewAutoresizing.FlexibleHeight,UIViewAutoresizing.FlexibleWidth];
         self.addSubview(view)
         container.frame = self.bounds
         

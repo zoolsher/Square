@@ -1,15 +1,22 @@
 PODS:
-  - GoAutoSlideView (0.6)
+  - Alamofire (3.4.1)
+  - AlamofireImage (2.4.1):
+    - Alamofire (~> 3.3)
   - IQKeyboardManager (4.0.4)
+  - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
-  - GoAutoSlideView (~> 0.6)
+  - Alamofire
+  - AlamofireImage (~> 2.0)
   - IQKeyboardManager
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
-  GoAutoSlideView: ab44fb21920bbcd43d6dfae0366aac16951ff32d
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  AlamofireImage: 3ccf3347d9ea24580dc11fb892770a0be6a29826
   IQKeyboardManager: 4a6f83b540283c2645aaeba2bd8dc0f09b5c77f8
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: cee4632de72fbafe8df8bb2667f446f14a0d418b
+PODFILE CHECKSUM: 94cf1ce41b073f6c2a0fdaee3b65e6d75ee64845
 
 COCOAPODS: 1.0.1

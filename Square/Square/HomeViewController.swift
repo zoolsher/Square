@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AlamofireImage
+import Alamofire
 
 
 
@@ -45,7 +47,7 @@ class HomeViewController: UIViewController,UITabBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home";
-        self.navigationController?.navigationBar.barStyle = .black;
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black;
         self.initTopSlideImages()
         
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.goToWorks(_:)))
@@ -55,7 +57,7 @@ class HomeViewController: UIViewController,UITabBarDelegate {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         //set the selected into nil
         self.tabbar.selectedItem = nil;
     }
@@ -67,7 +69,7 @@ class HomeViewController: UIViewController,UITabBarDelegate {
     
     
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         if(isFirstTime){
             
             self.initImagePos()
@@ -109,15 +111,15 @@ class HomeViewController: UIViewController,UITabBarDelegate {
         let frame = self.containerView.frame;
         let scrollView = UIScrollView(frame:frame)
         
-        scrollView.backgroundColor = UIColor.black
-        scrollView.isPagingEnabled = true
+        scrollView.backgroundColor = UIColor.blackColor()
+        scrollView.pagingEnabled = true
         
         for index in 0..<arr.count{
             let workView = WorksOnHomeView(frame: CGRect(x:frame.size.width*CGFloat(index),y:0,width:frame.size.width,height:frame.size.height))
-            workView.loadData(title: arr[index]["title"]!, postedBy: arr[index]["postedBy"]!)
-            fetchImage(url: URL(string:arr[index]["image"]!)!, res: { (img) in
+            workView.loadData(arr[index]["title"]!, postedBy: arr[index]["postedBy"]!)
+            fetchImage(NSURL(string:arr[index]["image"]!)!, res: { (img) in
                 print("fetched data")
-                workView.loadImg(img: img)
+                workView.loadImg(img)
             })
             scrollView.addSubview(workView)
         }
@@ -135,19 +137,20 @@ class HomeViewController: UIViewController,UITabBarDelegate {
                            height:self.containerView.frame.height);
         let scrollView = UIScrollView(frame:self.containerView.frame)
         
-        scrollView.backgroundColor = UIColor.black
-        scrollView.isScrollEnabled = true
+        scrollView.backgroundColor = UIColor.blackColor()
+        scrollView.scrollEnabled = true
         
         
         for index in 0..<arr.count{
             let workView = CollectionOnHomeView(frame: CGRect(x:frame.size.width*CGFloat(index),y:0,width:frame.size.width,height:frame.size.height))
-            workView.loadData(title: arr[index]["title"]!, postedBy: arr[index]["postedBy"]!)
+            workView.loadData(arr[index]["title"]!, postedBy: arr[index]["postedBy"]!)
             workView.viewAllAction = {() in
-                self.performSegue(withIdentifier: "GoToCollection", sender: nil)
+                self.performSegueWithIdentifier("GoToCollection", sender: nil)
+//                self.performSegue(withIdentifier: "GoToCollection", sender: nil)
             }
-            fetchImage(url: URL(string:arr[index]["image"]!)!, res: { (img) in
+            fetchImage(NSURL(string:arr[index]["image"]!)!, res: { (img) in
                 print("fetched data")
-                workView.loadImg(img: img)
+                workView.loadImg(img)
             })
             scrollView.addSubview(workView)
         }
@@ -167,25 +170,56 @@ class HomeViewController: UIViewController,UITabBarDelegate {
         
     }
     
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        self.performSegue(withIdentifier: "GoToWork", sender: nil)
+    func tabBar(tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        let index = tabBar.items?.index(of: item);
+        let index = tabBar.items?.indexOf(item)
+        let v:Int = index!;
+        switch v{
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+//            self.performSegue(withIdentifier: "GoToNotification", sender: nil)
+            self.performSegueWithIdentifier("GoToNotification", sender: nil)
+            break;
+        case 4:
+            break;
+        default:
+            break;
+        }
+        
     }
     
     
     //MARK:
     
     //MARK: segue
-    func goToWorks(_ sender:UITapGestureRecognizer){
-        self.performSegue(withIdentifier: "GoToWork", sender: nil)
+    func goToWorks(sender:UITapGestureRecognizer){
+//        self.performSegue(withIdentifier: "GoToWork", sender: nil)
+        self.performSegueWithIdentifier("GoToWork", sender: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "GoToWork"){
-            _ = segue.destination as! WorkViewController
-        }else{
-            _ = segue.destination as! CollectionViewController
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier!{
+        case "GoToWork":
+            _ = segue.destinationViewController as! WorkViewController
+            break;
+        case "GoToNotification":
+            _ = segue.destinationViewController as! NotificationViewController
+            break;
+        case "GoToCollection":
+            _ = segue.destinationViewController as! CollectionViewController
+            break;
+        default:
+            break;
         }
+
     }
+    
+    
     //MARK:
     
     
@@ -197,20 +231,20 @@ class HomeViewController: UIViewController,UITabBarDelegate {
         let tapGR1 = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.imageTapHandler(_:)));
         let tapGR2 = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.imageTapHandler(_:)));
         let tapGR3 = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.imageTapHandler(_:)));
-        imageView1.isUserInteractionEnabled = true
-        imageView2.isUserInteractionEnabled = true
-        imageView3.isUserInteractionEnabled = true
+        imageView1.userInteractionEnabled = true
+        imageView2.userInteractionEnabled = true
+        imageView3.userInteractionEnabled = true
         imageView1.addGestureRecognizer(tapGR1)
         imageView2.addGestureRecognizer(tapGR2)
         imageView3.addGestureRecognizer(tapGR3)
-        fetchImage (url: URL(string: "http://att.bbs.duowan.com/forum/201403/24/1543112eltwpai1452ve40.jpg")!){ (img) in
+        fetchImage (NSURL(string: "http://att.bbs.duowan.com/forum/201403/24/1543112eltwpai1452ve40.jpg")!){ (img) in
             self.imageView1.image = img;
             self.imageView2.image = img;
             self.imageView3.image = img;
         }
     }
     
-    func imageTapHandler(_ sender:UITapGestureRecognizer){
+    func imageTapHandler(sender:UITapGestureRecognizer){
         // dispatch action
         if(sender.view == imageView1){
             self.updateImagePos(0)
@@ -258,12 +292,13 @@ class HomeViewController: UIViewController,UITabBarDelegate {
         return ;
     }
     
-    func updateImagePos(_ index:Int){
-        UIView.animate(withDuration: 0.5,
+    func updateImagePos(index:Int){
+        UIView.animateWithDuration(0.5,
+//        (withDuration: 0.5,
                        delay: 0.0,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 15.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIViewAnimationOptions.CurveEaseInOut,
                        animations: {() -> Void in
                         for i in 0...2{
                             self.imageViewArr?[i].frame = self.imageViewFrameArr[index][i]
@@ -273,16 +308,16 @@ class HomeViewController: UIViewController,UITabBarDelegate {
     }
     //MARK:
     
-    func fetchImage(url:URL,res:(UIImage)->Void){
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        URLSession.shared.dataTask(with: request, completionHandler: {(data,_,_) in
-            
-            let image = UIImage.init(data: data!);
-            DispatchQueue.main.sync(execute: {
-                res(image!);
-            })
-        }).resume()
+    func fetchImage(url:NSURL,res:(UIImage)->Void){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
+            Alamofire.request(.GET, url)
+                .responseImage { (response) in
+                    debugPrint(response)
+                    dispatch_async(dispatch_get_main_queue()){
+                        res(response.result.value!)
+                    }
+            }
+        }
     }
     
 }

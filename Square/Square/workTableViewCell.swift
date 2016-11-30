@@ -35,7 +35,7 @@ class workTableViewCell: UITableViewCell {
         self.workImageView.image = image;
     }
     
-    func loadData(title title:String,postedBy postedBy:String,time time:String,view view:String,heart heart:String,comment comment:String){
+    func loadData( title:String, postedBy:String, time:String, view:String, heart:String, comment:String){
         
         self.title = title;
         

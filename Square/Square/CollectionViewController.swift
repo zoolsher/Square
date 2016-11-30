@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class CollectionViewController: UIViewController,UITableViewDataSource {
 
@@ -14,15 +15,15 @@ class CollectionViewController: UIViewController,UITableViewDataSource {
     
     static var testURL:String = "http://att.bbs.duowan.com/forum/201403/24/1543112eltwpai1452ve40.jpg";
     var arr = [
-        ["title":"a","postedBy":"posted by Some","image":testURL,"time":"justnow","view":"100","heart":"100","comment":"100"],
-        ["title":"a","postedBy":"posted by Some","image":testURL,"time":"justnow","view":"100","heart":"100","comment":"101"],
-        ["title":"a","postedBy":"posted by Some","image":testURL,"time":"justnow","view":"100","heart":"100","comment":"102"]
+        ["title":"a","postedBy":"posted by Some","image":testURL,"time":"justnow","view":"100","heart":"100","comment":"100","intro":"this is a intro about nothing this is a intro about nothing this is a intro about nothing this is a intro about nothing this is a intro about nothing this is a intro about nothing this is a intro about nothing this is a intro about nothing","category":"what"],
+        ["title":"a","postedBy":"posted by Some","image":testURL,"time":"justnow","view":"100","heart":"100","comment":"101","intro":"this is a intro about nothing","category":"what"],
+        ["title":"a","postedBy":"posted by Some","image":testURL,"time":"justnow","view":"100","heart":"100","comment":"102","intro":"this is a intro about nothing","category":"what"]
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Collection";
-        self.navigationController?.navigationBar.barStyle = .black;
+        self.navigationController?.navigationBar.barStyle = .Black;
         // Do any additional setup after loading the view.
         loadTableViewCell()
     }
@@ -35,50 +36,62 @@ class CollectionViewController: UIViewController,UITableViewDataSource {
     func loadTableViewCell(){
         
         tableView.dataSource = self;
-        tableView.rowHeight = 300
+        tableView.rowHeight = 250
         
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arr.count
     }
     
-    let reuse = "_worktableviewcell";
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let reuse = "_collectionTableViewCell";
+    
+    
         
-        var tableViewCell = tableView.dequeueReusableCell(withIdentifier: reuse) as? workTableViewCell
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var tableViewCell = tableView.dequeueReusableCellWithIdentifier(reuse) as? CollectionTableViewCell
         if(tableViewCell==nil){
             print("created one");
-            tableViewCell = Bundle.main.loadNibNamed("workTableViewCell", owner: nil, options: nil)?.first as! workTableViewCell;
+            tableViewCell = NSBundle.mainBundle().loadNibNamed("CollectionTableViewCell", owner: nil, options: nil)?.first as? CollectionTableViewCell;
         }
         
         let data = arr[indexPath.row];
         
-        print("load \(data["comment"]!)")
-        tableViewCell?.loadData(title: data["title"]!, postedBy: data["postedBy"]!, time: data["time"]!, view: data["view"]!, heart: data["heart"]!, comment: data["comment"]!)
-        fetchImage(url: URL(string:data["image"]!)!, res: {(img) in
-            //todo: check the bang of the image lazy load
-            if(tableViewCell?.comment == data["comment"]!){
-                tableViewCell?.loadImage(image: img);
-            }
+        tableViewCell?.loadData(data["time"]!,
+                                postedBy: data["postedBy"]!,
+                                title: data["title"]!,
+                                intro: data["intro"]!,
+                                category: data["category"]!,
+                                view: data["view"]!,
+                                heart: data["heart"]!,
+                                comment: data["comment"]!
+        )
+        fetchImage(NSURL(string:data["image"]!)!, res: {(img) in
+//            todo: check the bang of the image lazy load
+            tableViewCell?.loadImage(img)
         })
+        
         return tableViewCell!;
     }
     
-    func fetchImage(url:URL,res:(UIImage)->Void){
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        URLSession.shared.dataTask(with: request, completionHandler: {(data,_,_) in
-            
-            let image = UIImage.init(data: data!);
-            DispatchQueue.main.sync(execute: {
-                res(image!);
-            })
-        }).resume()
+    func fetchImage(url:NSURL,res:(UIImage)->Void){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){
+            Alamofire.request(.GET, url)
+                .responseImage { (response) in
+                    debugPrint(response)
+                    dispatch_async(dispatch_get_main_queue()){
+                        res(response.result.value!)
+                    }
+            }
+        }
     }
     
     /*

@@ -35,7 +35,7 @@ class WorksOnHomeView: UIView {
     }
     
     func loadViewFromXib()->UIView{
-        let bundle = Bundle.main.loadNibNamed("WorksOnHomeView", owner: self, options: nil);
+        let bundle = NSBundle.mainBundle().loadNibNamed("WorksOnHomeView", owner: self, options: nil);
         let tmpView = bundle?.first as! UIView;
         return tmpView;
     }
@@ -43,7 +43,7 @@ class WorksOnHomeView: UIView {
     func setupSubviews(){
         
         view = loadViewFromXib()
-        view.autoresizingMask = [UIViewAutoresizing.flexibleHeight,UIViewAutoresizing.flexibleWidth];
+        view.autoresizingMask = [UIViewAutoresizing.FlexibleHeight,UIViewAutoresizing.FlexibleWidth];
         self.addSubview(view)
         container.frame = self.bounds
         

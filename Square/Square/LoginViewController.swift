@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         self.loadContainerView();
     }
     
@@ -62,21 +62,21 @@ class LoginViewController: UIViewController {
         
     }
     
-    func updateContainerView(_ animated:Bool = true){
+    func updateContainerView(animated:Bool = true){
         //spring animation for switch
-        
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 15.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {() -> Void in
-                        var rect = self.ContainerView.frame;
-                        rect.origin.x = CGFloat(0 - self.curShow) * self.view.frame.width;
-                        self.ContainerView.frame = rect;
-                        //self.ContainerView.frame.offsetBy(dx: CGFloat(0 - self.curShow) * self.view.frame.width,dy: 0);
+        UIView.animateWithDuration(0.5,
+                                   //        UIView.animate(withDuration: 0.5,
+            delay: 0.0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 15.0,
+            options: UIViewAnimationOptions.CurveEaseInOut,
+            animations: {() -> Void in
+                var rect = self.ContainerView.frame;
+                rect.origin.x = CGFloat(0 - self.curShow) * self.view.frame.width;
+                self.ContainerView.frame = rect;
+                //self.ContainerView.frame.offsetBy(dx: CGFloat(0 - self.curShow) * self.view.frame.width,dy: 0);
             },
-                       completion: nil);
+            completion: nil);
     }
     
     
@@ -89,59 +89,59 @@ class LoginViewController: UIViewController {
         let height = width;
         
         logoView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        logoView.contentMode = .scaleAspectFit;
+        logoView.contentMode = .ScaleAspectFit;
         
         let containView = UIView(frame: self.view.frame)
         logoView.translatesAutoresizingMaskIntoConstraints = false;
         containView.addSubview(logoView)
         
         let consX = NSLayoutConstraint(item: logoView,
-                                       attribute: NSLayoutAttribute.centerX,
-                                       relatedBy: NSLayoutRelation.equal,
+                                       attribute: NSLayoutAttribute.CenterX,
+                                       relatedBy: NSLayoutRelation.Equal,
                                        toItem: containView,
-                                       attribute: NSLayoutAttribute.centerX,
+                                       attribute: NSLayoutAttribute.CenterX,
                                        multiplier: 1,
                                        constant: 0);
         let consY = NSLayoutConstraint(item: logoView,
-                                       attribute: NSLayoutAttribute.centerY,
-                                       relatedBy: NSLayoutRelation.equal,
+                                       attribute: NSLayoutAttribute.CenterY,
+                                       relatedBy: NSLayoutRelation.Equal,
                                        toItem: containView,
-                                       attribute: NSLayoutAttribute.centerY,
+                                       attribute: NSLayoutAttribute.CenterY,
                                        multiplier: 1,
                                        constant: 0);
         let consWidth = NSLayoutConstraint(item: logoView,
-                                           attribute: NSLayoutAttribute.width,
-                                           relatedBy: NSLayoutRelation.equal,
+                                           attribute: NSLayoutAttribute.Width,
+                                           relatedBy: NSLayoutRelation.Equal,
                                            toItem: nil,
-                                           attribute: NSLayoutAttribute.notAnAttribute,
+                                           attribute: NSLayoutAttribute.NotAnAttribute,
                                            multiplier: 1,
                                            constant: width);
         let consHeight = NSLayoutConstraint(item: logoView,
-                                            attribute: NSLayoutAttribute.height,
-                                            relatedBy: NSLayoutRelation.equal,
+                                            attribute: NSLayoutAttribute.Height,
+                                            relatedBy: NSLayoutRelation.Equal,
                                             toItem: nil,
-                                            attribute: NSLayoutAttribute.notAnAttribute,
+                                            attribute: NSLayoutAttribute.NotAnAttribute,
                                             multiplier: 1,
                                             constant: height);
         //adding app name
         let appName = UILabel()
         appName.font = UIFont(name: "DINCond-Regular", size: 20);
-        appName.textColor = UIColor.white;
+        appName.textColor = UIColor.whiteColor();
         appName.text = "Square";
         appName.translatesAutoresizingMaskIntoConstraints = false;
         
         let labelCenterX = NSLayoutConstraint(item: appName,
-                                              attribute: NSLayoutAttribute.centerX,
-                                              relatedBy: NSLayoutRelation.equal,
+                                              attribute: NSLayoutAttribute.CenterX,
+                                              relatedBy: NSLayoutRelation.Equal,
                                               toItem: containView,
-                                              attribute: NSLayoutAttribute.centerX,
+                                              attribute: NSLayoutAttribute.CenterX,
                                               multiplier: 1,
                                               constant: 0);
         let labelTopY = NSLayoutConstraint(item: appName,
-                                           attribute: NSLayoutAttribute.top,
-                                           relatedBy: NSLayoutRelation.equal,
+                                           attribute: NSLayoutAttribute.Top,
+                                           relatedBy: NSLayoutRelation.Equal,
                                            toItem: logoView,
-                                           attribute: NSLayoutAttribute.bottom,
+                                           attribute: NSLayoutAttribute.Bottom,
                                            multiplier: 1,
                                            constant: 20);
         
@@ -157,22 +157,22 @@ class LoginViewController: UIViewController {
         //        slogon.translatesAutoresizingMaskIntoConstraints = false;
         let slogon = UIButton()
         //        slogon.titleLabel?.text = "login";
-        slogon.titleLabel?.textColor = UIColor.white
-        slogon.setTitle("Login", for: UIControlState.normal)
-        slogon.addTarget(self, action: #selector(LoginViewController.goToLogin(_:)), for: UIControlEvents.touchUpInside)
+        slogon.titleLabel?.textColor = UIColor.whiteColor()
+        slogon.setTitle("Login", forState: UIControlState.Normal)
+        slogon.addTarget(self, action: #selector(LoginViewController.goToLogin(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         slogon.translatesAutoresizingMaskIntoConstraints = false;
         let slogonCenterX = NSLayoutConstraint(item: slogon,
-                                               attribute: NSLayoutAttribute.centerX,
-                                               relatedBy: NSLayoutRelation.equal,
+                                               attribute: NSLayoutAttribute.CenterX,
+                                               relatedBy: NSLayoutRelation.Equal,
                                                toItem: containView,
-                                               attribute: NSLayoutAttribute.centerX,
+                                               attribute: NSLayoutAttribute.CenterX,
                                                multiplier: 1,
                                                constant: 0);
         let slogonTopY = NSLayoutConstraint(item: slogon,
-                                            attribute: NSLayoutAttribute.top,
-                                            relatedBy: NSLayoutRelation.equal,
+                                            attribute: NSLayoutAttribute.Top,
+                                            relatedBy: NSLayoutRelation.Equal,
                                             toItem: appName,
-                                            attribute: NSLayoutAttribute.bottom,
+                                            attribute: NSLayoutAttribute.Bottom,
                                             multiplier: 1,
                                             constant: 20);
         constrains.append(slogonTopY);
@@ -184,7 +184,7 @@ class LoginViewController: UIViewController {
         return containView;
     }
     
-    func goToLogin(_ sender:UIControlEvents){
+    func goToLogin(sender:UIControlEvents){
         self.curShow = 1;
     }
     
@@ -193,7 +193,7 @@ class LoginViewController: UIViewController {
         
         
         
-        let blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.light))
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
         blur.frame = self.view.frame;
         let containView = UIView(frame: self.view.frame)
         
@@ -207,26 +207,24 @@ class LoginViewController: UIViewController {
             let u = User.shared;
             (u.userName,u.password) = loginView.getUserNameAndPassword()
             u.login{(error,res,reason) in
-                DispatchQueue.main.async {
+                
+                dispatch_async(dispatch_get_main_queue()){
                     if((error) != nil){
-                        print(error)
-                        let alert = UIAlertController(title: "网络错误", message: "网络错误", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "好吧", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        let alert = UIAlertController(title: "网络错误", message: "网络错误", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "好吧", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
                     }else{
-                        print(res,reason)
-                        if(res=="nok"){
-                            let alert = UIAlertController(title: "登录失败", message: reason, preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "知道了", style: UIAlertActionStyle.default, handler: nil))
-                            self.present(alert, animated: true, completion: nil)
+                        if(res == "nok"){
+                            let alert = UIAlertController(title: "登录失败", message: reason, preferredStyle: UIAlertControllerStyle.Alert)
+                            alert.addAction(UIAlertAction(title: "知道了", style: UIAlertActionStyle.Default, handler: nil))
+                            self.presentViewController(alert, animated: true, completion: nil)
                         }else{
                             UIView.beginAnimations("View Filp", context: nil)
                             UIView.setAnimationDuration(0.4)
-                            UIView.setAnimationCurve(.easeInOut)
-                            UIView.setAnimationTransition(.flipFromRight, for: self.view, cache: true)
-                            
-                            let home = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-                            self.present(home!, animated: true, completion: nil)
+                            UIView.setAnimationCurve(.EaseInOut)
+                            UIView.setAnimationTransition(.FlipFromRight, forView: self.view, cache: true)
+                            let home = self.storyboard?.instantiateViewControllerWithIdentifier("Home")
+                            self.presentViewController(home!, animated: true, completion: nil)
                             //            self.view.addSubview((home?.view)!)
                             //            home?.view.frame = self.view.frame;
                             //            self.ContainerView.removeFromSuperview()
@@ -234,10 +232,11 @@ class LoginViewController: UIViewController {
                             UIView.commitAnimations();
                         }
                     }
-                }
-            };
+                    
             
             
+        }
+            }
         }
         containView.addSubview(loginView);
         return containView;

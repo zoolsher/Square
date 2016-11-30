@@ -10,6 +10,8 @@
 		C309694C1D5488DA006B61F8 /* CollectionOnHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C309694B1D5488DA006B61F8 /* CollectionOnHomeView.swift */; };
 		C309694E1D5488F2006B61F8 /* CollectionOnHomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C309694D1D5488F2006B61F8 /* CollectionOnHomeView.xib */; };
 		C32187371D53706C005A38E0 /* WorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32187361D53706C005A38E0 /* WorkViewController.swift */; };
+		C335F6BD1D55FF6700ADE0FB /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C335F6BC1D55FF6700ADE0FB /* NotificationViewController.swift */; };
+		C335F6C01D56053400ADE0FB /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C335F6BF1D56053400ADE0FB /* MessageView.swift */; };
 		C33FB0AB1D53A026004460D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33FB0AA1D53A026004460D7 /* User.swift */; };
 		C33FB0AD1D53A273004460D7 /* BASE.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33FB0AC1D53A273004460D7 /* BASE.swift */; };
 		C3441D3E1D51E03A006F2FC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441D3D1D51E03A006F2FC2 /* AppDelegate.swift */; };
@@ -38,6 +40,8 @@
 		C309694B1D5488DA006B61F8 /* CollectionOnHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionOnHomeView.swift; sourceTree = "<group>"; };
 		C309694D1D5488F2006B61F8 /* CollectionOnHomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionOnHomeView.xib; sourceTree = "<group>"; };
 		C32187361D53706C005A38E0 /* WorkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkViewController.swift; sourceTree = "<group>"; };
+		C335F6BC1D55FF6700ADE0FB /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		C335F6BF1D56053400ADE0FB /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		C33FB0AA1D53A026004460D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C33FB0AC1D53A273004460D7 /* BASE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BASE.swift; sourceTree = "<group>"; };
 		C3441D3A1D51E03A006F2FC2 /* Square.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Square.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +97,14 @@
 				D71DB3C00C3CCD1C3D19B71C /* Pods-Square.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C335F6BE1D56050500ADE0FB /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				C335F6BF1D56053400ADE0FB /* MessageView.swift */,
+			);
+			name = Notification;
 			sourceTree = "<group>";
 		};
 		C33FB0A91D539FE4004460D7 /* Model */ = {
@@ -155,6 +167,7 @@
 				C3B6A9F21D51F0040021CD0A /* LoginViewController.swift */,
 				C32187361D53706C005A38E0 /* WorkViewController.swift */,
 				C3CAF44B1D550C6000CAB69B /* CollectionViewController.swift */,
+				C335F6BC1D55FF6700ADE0FB /* NotificationViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -162,6 +175,7 @@
 		C37C4F111D52F5370032FF87 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C335F6BE1D56050500ADE0FB /* Notification */,
 				C3CAF4461D550C0700CAB69B /* Collection */,
 				C3CAF4411D54C47900CAB69B /* Work */,
 				C3CAF4401D54C46100CAB69B /* Home */,
@@ -338,12 +352,14 @@
 				C3441D401D51E03A006F2FC2 /* HomeViewController.swift in Sources */,
 				C385B2B31D53139900F0606D /* SegmentControlView.swift in Sources */,
 				C3CAF44C1D550C6000CAB69B /* CollectionViewController.swift in Sources */,
+				C335F6BD1D55FF6700ADE0FB /* NotificationViewController.swift in Sources */,
 				C3441D3E1D51E03A006F2FC2 /* AppDelegate.swift in Sources */,
 				C33FB0AB1D53A026004460D7 /* User.swift in Sources */,
 				C37C4F0E1D52D58F0032FF87 /* LoginView.swift in Sources */,
 				C309694C1D5488DA006B61F8 /* CollectionOnHomeView.swift in Sources */,
 				C32187371D53706C005A38E0 /* WorkViewController.swift in Sources */,
 				C33FB0AD1D53A273004460D7 /* BASE.swift in Sources */,
+				C335F6C01D56053400ADE0FB /* MessageView.swift in Sources */,
 				C3441D461D51E03A006F2FC2 /* Square.xcdatamodeld in Sources */,
 				C3CAF4491D550C2A00CAB69B /* CollectionTableViewCell.swift in Sources */,
 				C3E851301D545C770018501C /* WorksOnHomeView.swift in Sources */,
@@ -474,6 +490,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7CRFMVS96A;
 				INFOPLIST_FILE = Square/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Zoolsher.Square;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -488,6 +505,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7CRFMVS96A;
 				INFOPLIST_FILE = Square/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Zoolsher.Square;
 				PRODUCT_NAME = "$(TARGET_NAME)";
